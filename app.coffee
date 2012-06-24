@@ -8,4 +8,6 @@ app.set 'view engine', 'jade'
 
 app.get '/', (req, resp) -> resp.render 'index'
 
-app.listen process.env.VMC_APP_PORT or 3000, -> console.log 'Listening...'
+port = process.env.VMC_APP_PORT or 3000
+
+app.listen port, -> console.log 'Listening... [#{port}]'
