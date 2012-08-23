@@ -1,12 +1,19 @@
 express = require 'express'
+connect = 
 stylus = require 'stylus'
 assets = require 'connect-assets'
+jsPrimer = require "./jsAssetPrimer"
 
 app = express()
 # Add Connect Assets
 app.use assets()
+# Set the public directory as static
+app.use express.static(process.cwd() + "/public")
 # Set View Engine
 app.set 'view engine', 'jade'
+
+jsPrimer.init js
+
 # Get root_path return index view
 app.get '/', (req, resp) -> 
   resp.render 'index'
