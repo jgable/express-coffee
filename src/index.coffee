@@ -1,5 +1,4 @@
 express = require 'express'
-connect = 
 stylus = require 'stylus'
 assets = require 'connect-assets'
 jsPrimer = require "./jsAssetPrimer"
@@ -14,9 +13,10 @@ app.set 'view engine', 'jade'
 
 jsPrimer.init js
 
-# Get root_path return index view
-app.get '/', (req, resp) -> 
+# All routes return layout.  (Chaplin loads views dynamically)
+app.get ['/', '/about'], (req, resp) -> 
   resp.render 'index'
+
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000
 # Start Server

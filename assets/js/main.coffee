@@ -1,19 +1,23 @@
 require.config
   paths:
-    cs: "/js/lib/cs"
-    "coffee-script": "/js/lib/coffee-script"
-    jQuery: "//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min"
-    Underscore: "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min",
-    Bootstrap: "/js/lib/bootstrap.min"
-    Backbone: "//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min"
+    text: "/js/lib/text"
+    handlebars: "/js/lib/handlebars"
+    jquery: "//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min"
+    underscore: "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min"
+    bootstrap: "/js/lib/bootstrap.min"
+    backbone: "//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min"
+    chaplin: "/js/lib/chaplin"
 
   shim:
-    Bootstrap: ["jQuery"]
-    Underscore:
+    jquery:
+      exports: "$"
+    bootstrap: 
+      deps: ["jquery"]
+    underscore:
       exports: "_"
-    Backbone:
-      deps: ["Underscore", "jQuery"]
+    backbone:
+      deps: ["underscore", "jquery"]
       exports: "Backbone"
-
+    
 require ['app'], (App) ->
-    App.init()
+    new App().initialize()
