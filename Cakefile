@@ -84,4 +84,17 @@ task 'dev', 'start dev env', ->
   supervisor.stderr.pipe process.stderr
   log 'Watching js files and running server', green
 
-  
+task 'live', 'start production server', ->
+  log 'Building files', green
+  build ->
+    log 'Starting production server', green
+    
+    # Set production NODE_ENV
+    currentEnv = process.env
+    currentEnv.NODE_ENV = "production"
+
+    server = spawn 'node', ['server'],
+      env: currentEnv
+
+    server.stdout.pipe process.stdout
+    server.stderr.pipe process.stderr

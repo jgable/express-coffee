@@ -10,9 +10,9 @@ define [
     title: 'Home'
 
     historyURL: (params) ->
-      ''
+      '/'
 
     show: (params) ->
       console.debug 'HomeController#show'
       @model = new Home()
-      @view = new HomeView model: @model
+      @view = new HomeView {@model}

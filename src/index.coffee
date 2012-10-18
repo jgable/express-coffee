@@ -1,7 +1,7 @@
 express = require 'express'
 stylus = require 'stylus'
 assets = require 'connect-assets'
-jsPrimer = require "./jsAssetPrimer"
+jsPathify = require 'connect-assets-jspaths'
 
 app = express()
 # Add Connect Assets
@@ -11,7 +11,7 @@ app.use express.static(process.cwd() + "/public")
 # Set View Engine
 app.set 'view engine', 'jade'
 
-jsPrimer.init js
+jsPathify assets, console.log
 
 # All routes return layout.  (Chaplin loads views dynamically)
 app.get ['/', '/about'], (req, resp) -> 

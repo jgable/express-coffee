@@ -1,20 +1,12 @@
 define [
   'views/base'
   'text!/templates/about.hbs'
-], (View, template) ->
+], (Views, template) ->
   'use strict'
 
-  class AboutView extends View
+  class AboutView extends Views.PageView
 
-    # Save the template string in a prototype property.
-    # This is overwritten with the compiled template function.
-    # In the end you might want to used precompiled templates.
-    template: template
-    template = null
+    constructor: (props) ->
+      super props, "aboutPage", template
 
-    className: 'aboutPage'
-
-    # Automatically append to the DOM on render
-    container: '#page-container'
-    # Automatically render after initialize
-    autoRender: true
+    

@@ -13,8 +13,6 @@ head
   
   != css("bootstrap")  
   != css("app")
-
-  script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.0.2/require.min.js", data-main="/js/main")    
 body
   header.navbar.navbar-fixed-top
     .navbar-inner
@@ -30,5 +28,15 @@ body
                           
   #page-container.container(data-role="main")
     block content
+    .loadyHold
+      .loady
+        h4 Loading
+
+  // Export our js asset paths for require.js
+  != exportPaths()
+
+  // Get a hold of the real url of the main.js file for referencing in data-main of require.js
+  - var mainJsPath = jsUrl("/js/main.js")
+  script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.0.2/require.js", data-main="#{mainJsPath}")
   
 </html>
