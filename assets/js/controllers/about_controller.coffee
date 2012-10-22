@@ -13,6 +13,6 @@ define [
       ''
 
     show: (params) ->
-      console.debug 'HomeController#about'
+      console.debug 'AboutController#show'
       @model = new About()
       @view = new AboutView model: @model      
