@@ -8,5 +8,3 @@ define [
 
     constructor: (props) ->
       super props, "aboutPage", template
-
-    
