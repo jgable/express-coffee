@@ -3,8 +3,9 @@ define [
   "views/layout", 
   "routes", 
   "controllers/navigation_controller",
+  "controllers/user_controller",
   "bootstrap" # Has no export
-], (Chaplin, Layout, routes, NavigationController) ->
+], (Chaplin, Layout, routes, NavigationController, UserController) ->
   
   # The application object
   # Choose a meaningful name for your application
@@ -54,6 +55,7 @@ define [
       # or navigation views.
       # e.g. new NavigationController()
       new NavigationController()
+      new UserController()
 
     # Create additional mediator properties
     # -------------------------------------
