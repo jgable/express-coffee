@@ -4,6 +4,8 @@ stylus = require 'stylus'
 assets = require "./assets"
 routes = require "./routes"
 
+{connect} = require "./data"
+
 app = express()
 
 # Add Connect Assets
@@ -20,6 +22,9 @@ assets.init app, (err, watcher) ->
 
 	# Set our routes
 	routes.init app
+
+	# Connect to the mongo db
+	connect()
 
 	# Define Port
 	port = process.env.PORT or process.env.VMC_APP_PORT or 3000
