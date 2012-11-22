@@ -10,8 +10,8 @@ dbUrl = process.env.NODE_ENV === "production" ? prodUrl : devUrl;
 module.exports = {
   dbServer: dbUrl,
   twitter: {
-    consumerKey: "",
-    consumerSecret: "",
+    consumerKey: "FILLMEIN",
+    consumerSecret: "FILLMEIN",
     callbackUrl: {
       dev: "",
       prod: ""

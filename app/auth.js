@@ -58,13 +58,20 @@ init = function(app, sessionUrl) {
   app.use(express.cookieParser("cookie fart"));
   app.use(express.bodyParser());
   app.use(express.session({
+    cookie: {
+      maxAge: 60000 * 180
+    },
     secret: "unicorn fart",
     maxAge: new Date(Date.now() + 3600000),
     store: new MongoStore({
-      url: sessionUrl
+      url: sessionUrl,
+      reapInterval: 60000 * 10
     })
   }, function(err) {
-    return console.log(err || "connect-mongodb setup ok");
+    if (err) {
+      throw err;
+    }
+    return console.log("Mongo Session Store Started");
   }));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -85,7 +92,7 @@ init = function(app, sessionUrl) {
 registerRoutes = function(app) {
   app.get('/auth/twitter', passport.authenticate('twitter'));
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-    successRedirect: '/shows',
+    successRedirect: '/',
     failureRedirect: '/'
   }));
   return app.get('/logout', function(req, res) {
