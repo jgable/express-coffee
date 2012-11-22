@@ -34,6 +34,9 @@ body
   // Export our js asset paths for require.js
   != exportPaths()
 
+  // Export our application specific data and settings.
+  != exportAppSettings()
+
   // Get a hold of the real url of the main.js file for referencing in data-main of require.js
   - var mainJsPath = jsUrl("/js/main.js")
   script(type="text/javascript", src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.0.2/require.js", data-main="#{mainJsPath}")
