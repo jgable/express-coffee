@@ -43,10 +43,13 @@ init = (app, sessionUrl = config.dbServer) ->
 
     # Set up the express session provider to use mongo
     app.use express.session
+        cookie: {maxAge: 60000 * 180} # 3 Hours 
         secret: "unicorn fart"
         maxAge: new Date(Date.now() + 3600000)
-        store: new MongoStore {url: sessionUrl}, (err) ->
-            console.log err or "connect-mongodb setup ok"
+        store: new MongoStore {url: sessionUrl, reapInterval: 60000 * 10}, (err) ->
+            throw err if err
+
+            console.log "Mongo Session Store Started"
 
     app.use passport.initialize()
     app.use passport.session()
@@ -71,7 +74,7 @@ registerRoutes = (app) ->
     # authentication process by attempting to obtain an access token.  If
     # access was granted, the user will be logged in.  Otherwise,
     # authentication has failed.
-    app.get '/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/shows', failureRedirect: '/' })
+    app.get '/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/' })
 
     app.get '/logout', (req, res) ->
       req.logOut()

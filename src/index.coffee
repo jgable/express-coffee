@@ -3,6 +3,7 @@ stylus = require 'stylus'
 
 assets = require "./assets"
 routes = require "./routes"
+auth = require "./auth"
 
 {connect} = require "./data"
 
@@ -20,8 +21,12 @@ assets.init app, (err, watcher) ->
 	# Set View Engine
 	app.set 'view engine', 'jade'
 
+	auth.init app
+
 	# Set our routes
 	routes.init app
+
+	auth.registerRoutes app
 
 	# Connect to the mongo db
 	connect()
