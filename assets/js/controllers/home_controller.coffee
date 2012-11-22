@@ -1,11 +1,11 @@
 define [
-  'chaplin'
+  'controllers/base'
   'models/home'
   'views/home'
-], (Chaplin, Home, HomeView) ->
+], (Base, Home, HomeView) ->
   'use strict'
 
-  class HomeController extends Chaplin.Controller
+  class HomeController extends Base.AuthController
 
     title: 'Home'
 
@@ -13,6 +13,7 @@ define [
       '/'
 
     show: (params) ->
-      console.debug 'HomeController#show'
+      super
+
       @model = new Home()
       @view = new HomeView {@model}

@@ -1,11 +1,11 @@
 define [
-  'chaplin'
+  'controllers/base'
   'models/about'
   'views/about'
-], (Chaplin, About, AboutView) ->
+], (Base, About, AboutView) ->
   'use strict'
 
-  class AboutController extends Chaplin.Controller
+  class AboutController extends Base.AuthController
 
     title: 'About'
 
@@ -13,6 +13,7 @@ define [
       ''
 
     show: (params) ->
-      console.debug 'AboutController#show'
+      super
+
       @model = new About()
       @view = new AboutView model: @model      
