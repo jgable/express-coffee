@@ -1,0 +1,25 @@
+{{^loggedIn}}
+    <a href="/auth/twitter">Not Logged In</a>
+{{/loggedIn}}
+{{#loggedIn}}
+    <div class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i>&nbsp;{{displayName}} <b class="caret"></b></a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+            <a href="/shows">Shows</a>
+        </li>
+        <!--
+        <li>
+            <a href="/other">Other Thing</a>
+        </li>
+        <li>
+            <a href="#">Yet Another Thing</a>
+        </li>
+        <li class="divider"></li>
+        -->
+        <li>
+            <a href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+{{/loggedIn}}
