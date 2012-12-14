@@ -1,7 +1,6 @@
 define [
   'views/base'
-  'text!/templates/navigation.hbs'
-], (Views, template) ->
+], (Views) ->
   'use strict'
 
   class NavigationView extends Views.TemplateView
@@ -17,4 +16,4 @@ define [
     autoRender: true
 
     constructor: (props) ->
-      super props, template
+      super props, 'navigation.hbs'

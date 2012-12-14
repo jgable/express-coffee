@@ -17,6 +17,17 @@ startCmd = pkg.scripts.start
 log = (message, color, explanation) ->
   console.log color + message + reset + ' ' + (explanation or '')
 
+run = (cmd, env = {}, callback) ->
+  args = cmd.split " "
+
+  exec = spawn args[0], args.slice(1), env
+
+  exec.stdin.pipe process.stdin
+  exec.stdout.pipe process.stdout
+  exec.stderr.pipe process.stderr
+
+  exec.on 'exit', (status) -> callback?() if status is 0
+
 # Compiles app.coffee and src directory to the app directory
 build = (callback) ->
   options = ['-c','-b', '-o', 'app', 'src']
@@ -25,6 +36,17 @@ build = (callback) ->
   coffee.stdout.pipe process.stdout
   coffee.stderr.pipe process.stderr
   coffee.on 'exit', (status) -> callback?() if status is 0
+
+upload = (callback) ->
+  # Set production NODE_ENV
+  currentEnv = process.env
+  currentEnv.NODE_ENV = "production"
+
+  run "node s3.js", currentEnv, callback
+
+deploy = (callback) ->
+  # NOTE: Doesn't work because of something wrong with input parser
+  run 'jitsu deploy -c', null, callback
 
 # mocha test
 test = (callback) ->
@@ -60,7 +82,6 @@ task 'docs', 'Generate annotated source code with Docco', ->
       log err.message, red
       log 'Docco is not installed - try npm install docco -g', red
 
-
 task 'build', ->
   build -> log ":)", green
 
@@ -79,7 +100,7 @@ task 'dev', 'start dev env', ->
   coffee.stderr.pipe process.stderr
   log 'Watching coffee files', green
   # watch_js
-  supervisor = spawn 'node', ['./node_modules/supervisor/lib/cli-wrapper.js','-w','app,views', '-e', 'js|jade', 'server']
+  supervisor = spawn 'node', ['./node_modules/supervisor/lib/cli-wrapper.js','-w','app,views', '-e', 'js|jade', 'server.js']
   supervisor.stdout.pipe process.stdout
   supervisor.stderr.pipe process.stderr
   log 'Watching js files and running server', green
@@ -93,8 +114,21 @@ task 'live', 'start production server', ->
     currentEnv = process.env
     currentEnv.NODE_ENV = "production"
 
-    server = spawn 'node', ['server'],
+    server = spawn 'node', ['server.js'],
       env: currentEnv
 
     server.stdout.pipe process.stdout
     server.stderr.pipe process.stderr
+
+task 's3', 'Upload builtAssets', ->
+  log "Uploading to S3", green
+  build ->
+    upload ->
+      log "Done", green
+
+task 'deploy', 'Deploy to production', ->
+  log "Deploying to production", green
+  build ->
+    upload ->
+      deploy ->
+        log "Done", green

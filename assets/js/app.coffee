@@ -4,8 +4,10 @@ define [
   "routes", 
   "controllers/navigation_controller",
   "controllers/user_controller",
+  "controllers/persona_controller",
+  "controllers/template_controller",
   "bootstrap" # Has no export
-], (Chaplin, Layout, routes, NavigationController, UserController) ->
+], (Chaplin, Layout, routes, NavigationController, UserController, PersonaController, TemplateController) ->
   
   # The application object
   # Choose a meaningful name for your application
@@ -56,12 +58,16 @@ define [
       # e.g. new NavigationController()
       new NavigationController()
       new UserController()
+      @PersonaController = new PersonaController
 
     # Create additional mediator properties
     # -------------------------------------
     initMediator: ->
       # Create a user property
-      Chaplin.mediator.user = null
-      # Add additional application-specific properties and methods
+      Chaplin.mediator.user = APPLICATION_SETTINGS?.user
+      
+      # Create the compiled templates controller
+      Chaplin.mediator.templates = new TemplateController
+
       # Seal the mediator
       Chaplin.mediator.seal()

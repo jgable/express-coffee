@@ -1,6 +1,6 @@
 mongoose = require "mongoose"
 
-[Users] = require "./users"
+Users = require "./users"
 
 config = require "../config"
 

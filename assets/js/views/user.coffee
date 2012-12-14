@@ -1,6 +1,5 @@
 define [
   'views/base'
-  'text!/templates/user.hbs'
 ], (Views, template) ->
   'use strict'
 
@@ -17,7 +16,7 @@ define [
     autoRender: true
 
     constructor: (props) ->
-      super props, template
+      super props, 'user.hbs'
 
     initialize: ->
       @modelBind "change:loggedIn", @render

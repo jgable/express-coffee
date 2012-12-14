@@ -9,6 +9,9 @@ auth = require "./auth"
 
 app = express()
 
+# Connect the mongo db
+connect()
+
 # Add Connect Assets
 assets.init app, (err, watcher) ->
 	throw err if err

@@ -3,7 +3,7 @@ var Users, config, connect, mongoose;
 
 mongoose = require("mongoose");
 
-Users = require("./users")[0];
+Users = require("./users");
 
 config = require("../config");
 

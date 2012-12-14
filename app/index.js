@@ -15,6 +15,8 @@ connect = require("./data").connect;
 
 app = express();
 
+connect();
+
 assets.init(app, function(err, watcher) {
   var port;
   if (err) {
